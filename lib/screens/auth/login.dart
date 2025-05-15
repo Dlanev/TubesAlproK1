@@ -8,6 +8,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   Widget _authTitle() {
     return Container(
+      width: double.infinity,
       padding: EdgeInsets.only(bottom: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,6 +24,55 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Widget _inputEmail() {
+    return Container(
+      child: TextField(decoration: InputDecoration(hintText: 'Email')),
+    );
+  }
+
+  Widget _inputPw() {
+    return Stack(
+      children: <Widget>[
+        Container(
+          child: TextField(decoration: InputDecoration(hintText: 'Password')),
+        ),
+
+        Align(
+          alignment: Alignment.centerRight,
+          child: IconButton(icon: Icon(Icons.visibility), onPressed: () {}),
+        ),
+      ],
+    );
+  }
+
+  Widget _forgotPw() {
+    return GestureDetector(
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          color: Colors.transparent,
+          padding: EdgeInsets.fromLTRB(0, 20, 20, 20),
+          child: Text('Forgot Password?'),
+        ),
+      ),
+      onTap: () {
+        print('Forgot Password?');
+      },
+    );
+  }
+
+  Widget _subMit() {
+    return Container(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.deepPurpleAccent,
+          foregroundColor: Colors.white,
+        ),
+        child: Text('Login'), onPressed: () {}),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +82,10 @@ class _LoginState extends State<Login> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             _authTitle(),
-            Text('Input Email'),
-            Text('Input Password'),
-            Text('Forgot Password'),
-            Text('Login'),
+            _inputEmail(),
+            _inputPw(),
+            _forgotPw(),
+            _subMit(),
             Text('Divider'),
             Text('Register'),
           ],

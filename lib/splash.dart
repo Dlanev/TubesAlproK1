@@ -4,8 +4,6 @@ import 'package:tubes_alpro/screens/home/home.dart';
 import 'package:tubes_alpro/widgets/widgets.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({super.key});
-
   @override
   State<Splash> createState() => _SplashState();
 }
