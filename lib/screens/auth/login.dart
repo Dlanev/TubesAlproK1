@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes_alpro/widgets/widgets.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -7,21 +8,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   Widget _authTitle() {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.only(bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'Login',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 3),
-          Text('Enter your email and password'),
-        ],
-      ),
-    );
+    return wAuthTitle(
+      'Login', 
+      'Enter your email and password');
   }
 
   Widget _inputEmail() {
@@ -73,22 +62,63 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Widget _textDivider(){
+    return wTextDivider('OR CONNECT WITH');
+  }
+
+  Widget _gSignin(){
+    return Container(
+      width: double.infinity,
+      child: ElevatedButton.icon(icon: Icon(Icons.mail),onPressed: (){}, label: Text('Google'))
+    );
+  }
+
+  Widget _regisTr(){
+    return Container(
+      margin: EdgeInsets.only(top: 40),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text('Belum Punya Akun? '),
+          GestureDetector(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+              color: Colors.transparent,
+              child: Text('Daftar', style: TextStyle(color: Colors.deepPurpleAccent),),
+            ),
+            onTap: (){
+              print('Register');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _authTitle(),
-            _inputEmail(),
-            _inputPw(),
-            _forgotPw(),
-            _subMit(),
-            Text('Divider'),
-            Text('Register'),
-          ],
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _authTitle(),
+              _inputEmail(),
+              _inputPw(),
+              _forgotPw(),
+              _subMit(),
+              _textDivider(),
+              _gSignin(),
+              _regisTr(),
+            ],
+          ),
         ),
       ),
     );
