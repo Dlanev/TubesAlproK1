@@ -59,10 +59,20 @@ class _BudgetPageState extends State<BudgetPage> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    print('Budget: ${_budgetController.text}');
+                    final budgetText = _budgetController.text;
+                    final budget = int.tryParse(budgetText);
+
+                    if (budget != null) {
+                      Navigator.pop(context, budget); 
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Masukkan angka yang valid!')),
+                      );
+                    }
+                    ;
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF9B59B6), // Ungu tua
+                    backgroundColor: Colors.deepPurpleAccent, // Ungu tua
                     shape: StadiumBorder(), // Bentuk kapsul
                   ),
                   child: Text(
@@ -74,7 +84,7 @@ class _BudgetPageState extends State<BudgetPage> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -82,4 +92,3 @@ class _BudgetPageState extends State<BudgetPage> {
     );
   }
 }
-
