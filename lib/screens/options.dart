@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MaterialApp(home: OptionsScreen()));
-}
-
 class OptionsScreen extends StatelessWidget {
   const OptionsScreen({super.key});
 

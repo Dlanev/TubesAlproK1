@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes_alpro/screens/options.dart';
 import 'package:tubes_alpro/screens/tripscreen/trip.dart';
 
 class Home extends StatefulWidget {
@@ -99,12 +100,21 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.more_horiz_rounded, color: Colors.white),
-                onPressed: () {},
+                onPressed: () {
+                   Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const OptionsScreen(),
+                    ),
+                  );
+                },
               ),
-              SizedBox(width: 40), // ruang tombol tengah
+              SizedBox(width: 40), 
               IconButton(
                 icon: Icon(Icons.person, color: Colors.white),
-                onPressed: () {},
+                onPressed: () {
+                 
+                },
               ),
             ],
           ),
@@ -117,7 +127,7 @@ class _HomeState extends State<Home> {
         },
         backgroundColor: Colors.white,
         elevation: 4,
-        child: Icon(Icons.qr_code_scanner), // bisa diganti sama Icon(Icons.add)
+        child: Icon(Icons.qr_code_scanner), 
       ),
     );
   }

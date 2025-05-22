@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes_alpro/screens/home/home.dart';
 import 'package:tubes_alpro/widgets/widgets.dart';
 
 class Login extends StatefulWidget {
@@ -8,9 +9,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   Widget _authTitle() {
-    return wAuthTitle(
-      'Login', 
-      'Enter your email and password');
+    return wAuthTitle('Login', 'Enter your email and password');
   }
 
   Widget _inputEmail() {
@@ -58,22 +57,33 @@ class _LoginState extends State<Login> {
           backgroundColor: Colors.deepPurpleAccent,
           foregroundColor: Colors.white,
         ),
-        child: Text('Login'), onPressed: () {}),
+        child: Text('Login'),
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Home()),
+          );
+        },
+      ),
     );
   }
 
-  Widget _textDivider(){
+  Widget _textDivider() {
     return wTextDivider('OR CONNECT WITH');
   }
 
-  Widget _gSignin(){
+  Widget _gSignin() {
     return Container(
       width: double.infinity,
-      child: ElevatedButton.icon(icon: Icon(Icons.mail),onPressed: (){}, label: Text('Google'))
+      child: ElevatedButton.icon(
+        icon: Icon(Icons.mail),
+        onPressed: () {},
+        label: Text('Google'),
+      ),
     );
   }
 
-  Widget _regisTr(){
+  Widget _regisTr() {
     return Container(
       margin: EdgeInsets.only(top: 40),
       child: Row(
@@ -84,9 +94,12 @@ class _LoginState extends State<Login> {
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
               color: Colors.transparent,
-              child: Text('Daftar', style: TextStyle(color: Colors.deepPurpleAccent),),
+              child: Text(
+                'Daftar',
+                style: TextStyle(color: Colors.deepPurpleAccent),
+              ),
             ),
-            onTap: (){
+            onTap: () {
               print('Register');
             },
           ),
@@ -95,11 +108,10 @@ class _LoginState extends State<Login> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
