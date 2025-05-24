@@ -220,30 +220,34 @@ class BudgetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _controller,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Masukkan nominal'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final budget = int.tryParse(_controller.text);
-                if (budget != null) {
-                  Navigator.pop(context, budget);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Masukkan angka yang valid')),
-                  );
-                }
-              },
-              child: Text('Simpan'),
-            ),
-          ],
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Spacer(flex: 1),
+              TextField(
+                controller: _controller,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: 'Masukkan nominal'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  final budget = int.tryParse(_controller.text);
+                  if (budget != null) {
+                    Navigator.pop(context, budget);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Masukkan angka yang valid')),
+                    );
+                  }
+                },
+                child: Text('Simpan'),
+              ),
+              Spacer(flex: 2,),
+            ],
+          ),
         ),
       ),
     );
