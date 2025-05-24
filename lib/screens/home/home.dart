@@ -99,6 +99,135 @@ class _HomeState extends State<Home> {
         centerTitle: false,
       ),
 
+<<<<<<< HEAD
+      
+
+  body: Padding(
+  padding: const EdgeInsets.all(20),
+  child: Column(
+    children: [
+      buildBudgetBox(
+        value: budGet.Balance,
+        emptyLabel: "Masukkan Budget Modal",
+        filledLabel: "Budget Modal Anda Sekarang",
+        onPressed: () => _inputBudget("Masukkan Budget Modal", (val) {
+          setState(() {
+            budGet.Balance = val;
+          });
+        }),
+      ),
+      SizedBox(height: 20),
+      buildBudgetBox(
+        value: budGet.Budget,
+        emptyLabel: "Masukkan Budget Perjalanan",
+        filledLabel: "Budget Perjalanan Anda Sekarang",
+        onPressed: () => _inputBudget("Masukkan Budget Perjalanan", (val) {
+          setState(() {
+            budGet.Budget = val;
+            budGet.Balance = budGet.Balance - budGet.Budget;
+            isTripActive = true;
+          });
+        }),
+      ),
+      SizedBox(height: 20),
+
+      if (isTripActive) ...[
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              budGet.Balance += budGet.Budget;
+              budGet.Budget = 0;
+              isTripActive = false;
+            });
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 255, 237, 41),
+            foregroundColor: const Color.fromARGB(255, 39, 39, 39),
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          ),
+          child: Text("Akhiri Perjalanan Anda"),
+        ),
+        SizedBox(height: 10),
+      ],
+      Expanded(
+        child: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(bottom: 20), // Jarak dari tombol QR
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 255, 255, 255),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: EdgeInsets.all(8), // Padding
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 9),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 224, 207, 255),
+                      foregroundColor: const Color.fromARGB(255, 96, 41, 184),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      "History",
+                      style: TextStyle(fontSize: 16),
+                      ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 9),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 224, 207, 255),
+                      foregroundColor: const Color.fromARGB(255, 96, 41, 184),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      "Chart",
+                      style: TextStyle(fontSize: 16),
+                      ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 9),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 224, 207, 255),
+                      foregroundColor: const Color.fromARGB(255, 96, 41, 184),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      "More Info",
+                      style: TextStyle(fontSize: 16),
+                      ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+
+    ],
+  ),
+),
+
+=======
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -164,6 +293,9 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+>>>>>>> d5b5c65b840ca34536036eb7a65a5d131e78ba07
+
+
 
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
