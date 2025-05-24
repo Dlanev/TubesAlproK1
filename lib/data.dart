@@ -11,9 +11,11 @@ class budGet {
 }
 
 class spend {
-  static int amount = 0;
-  static String tipe = '';
+  int? amount = 0;
+  String tipe = '';
   TimeOfDay waktu = TimeOfDay(hour: 0, minute: 0);
 }
 
 List<spend> spEnding = [];
+
+int nData = 0;
