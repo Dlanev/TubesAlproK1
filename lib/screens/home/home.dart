@@ -8,8 +8,78 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int? _userBudget;
+  int? _modalBudget;
+  int? _travelBudget;
 
+  Future<void> _inputBudget(String title, Function(int) onSaved) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BudgetPage(title: title),
+      ),
+    );
+    if (result != null) {
+      onSaved(result);
+    }
+  }
+
+  Widget buildBudgetBox({
+    required int? value,
+    required String emptyLabel,
+    required String filledLabel,
+    required VoidCallback onPressed,
+  }) {
+    final isFilled = value != null;
+
+    return Container(
+      height: 140,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: isFilled ? Colors.deepPurpleAccent : Colors.deepPurple[100],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      padding: EdgeInsets.all(16),
+      child: isFilled
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  filledLabel,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white70,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Rp $value',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            )
+          : Center(
+              child: ElevatedButton(
+                onPressed: onPressed,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 14),
+                ),
+                child: Text(emptyLabel),
+              ),
+            ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFE6E6FA),
@@ -27,66 +97,30 @@ class _HomeState extends State<Home> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Container(
-          height: 300,
-          decoration: BoxDecoration(
-            color: Colors.deepPurple[100],
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: SizedBox(
-                width: double.infinity,
-                child:
-                    _userBudget != null
-                        ? Container(
-                          height: 250,
-                          decoration: BoxDecoration(
-                            color: Colors.deepPurpleAccent,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '$_userBudget',
-                              style: TextStyle(
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                        )
-                        : ElevatedButton(
-                          onPressed: () async {
-                            final result = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BudgetPage(),
-                              ),
-                            );
-                            if (result != null) {
-                              print('Budget yang dimasukkan: $result');
-                              setState(() {
-                                _userBudget = result;
-                              });
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepPurple,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: EdgeInsets.symmetric(vertical: 14),
-                          ),
-                          child: Text("Mulai Masukkan Budget!"),
-                        ),
-              ),
+        child: Column(
+          children: [
+            buildBudgetBox(
+              value: _modalBudget,
+              emptyLabel: "Masukkan Budget Modal",
+              filledLabel: "Budget Modal Anda Sekarang",
+              onPressed: () => _inputBudget("Masukkan Budget Modal", (val) {
+                setState(() {
+                  _modalBudget = val;
+                });
+              }),
             ),
-          ),
+            SizedBox(height: 20),
+            buildBudgetBox(
+              value: _travelBudget,
+              emptyLabel: "Masukkan Budget Perjalanan",
+              filledLabel: "Budget Perjalanan Anda Sekarang",
+              onPressed: () => _inputBudget("Masukkan Budget Perjalanan", (val) {
+                setState(() {
+                  _travelBudget = val;
+                });
+              }),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -101,7 +135,7 @@ class _HomeState extends State<Home> {
               IconButton(
                 icon: Icon(Icons.more_horiz_rounded, color: Colors.white),
                 onPressed: () {
-                   Navigator.push(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const OptionsScreen(),
@@ -109,12 +143,10 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
-              SizedBox(width: 40), 
+              SizedBox(width: 40),
               IconButton(
                 icon: Icon(Icons.person, color: Colors.white),
-                onPressed: () {
-                 
-                },
+                onPressed: () {},
               ),
             ],
           ),
@@ -122,12 +154,50 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // aksi tombol tengah
-        },
+        onPressed: () {},
         backgroundColor: Colors.white,
         elevation: 4,
-        child: Icon(Icons.qr_code_scanner), 
+        child: Icon(Icons.qr_code_scanner),
+      ),
+    );
+  }
+}
+
+class BudgetPage extends StatelessWidget {
+  final String title;
+  final TextEditingController _controller = TextEditingController();
+
+  BudgetPage({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _controller,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: 'Masukkan nominal'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                final budget = int.tryParse(_controller.text);
+                if (budget != null) {
+                  Navigator.pop(context, budget);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Masukkan angka yang valid')),
+                  );
+                }
+              },
+              child: Text('Simpan'),
+            )
+          ],
+        ),
       ),
     );
   }
