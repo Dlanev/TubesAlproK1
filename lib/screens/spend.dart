@@ -10,6 +10,7 @@ class spenData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Spend')),
       resizeToAvoidBottomInset: false,
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
@@ -33,6 +34,10 @@ class spenData extends StatelessWidget {
             ),
             wTextDivider(''),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurpleAccent,
+                foregroundColor: Colors.white,
+              ),
               onPressed: () {
                 final amount = int.tryParse(_controller1.text);
                 final tipe = _controller2.text;
@@ -50,7 +55,7 @@ class spenData extends StatelessWidget {
                 } else {
                   spEnding.add(spend(amount: amount, tipe: tipe));
                   nData++;
-                  budGet.Budget -= amount; 
+                  budGet.Budget -= amount;
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Home()),
