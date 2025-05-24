@@ -1,6 +1,8 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:tubes_alpro/data.dart';
 import 'package:tubes_alpro/screens/options.dart';
-import 'package:tubes_alpro/screens/tripscreen/trip.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,8 +10,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int? _modalBudget;
-  int? _travelBudget;
 
   Future<void> _inputBudget(String title, Function(int) onSaved) async {
     final result = await Navigator.push(
@@ -100,23 +100,24 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             buildBudgetBox(
-              value: _modalBudget,
+              value: budGet.Balance,
               emptyLabel: "Masukkan Budget Modal",
               filledLabel: "Budget Modal Anda Sekarang",
               onPressed: () => _inputBudget("Masukkan Budget Modal", (val) {
                 setState(() {
-                  _modalBudget = val;
+                  budGet.Balance = val;
                 });
               }),
             ),
             SizedBox(height: 20),
             buildBudgetBox(
-              value: _travelBudget,
+              value: budGet.Budget,
               emptyLabel: "Masukkan Budget Perjalanan",
               filledLabel: "Budget Perjalanan Anda Sekarang",
               onPressed: () => _inputBudget("Masukkan Budget Perjalanan", (val) {
                 setState(() {
-                  _travelBudget = val;
+                  budGet.Budget = val;
+                  budGet.Balance = budGet.Balance - budGet.Budget;
                 });
               }),
             ),

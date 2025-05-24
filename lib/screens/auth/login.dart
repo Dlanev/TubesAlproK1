@@ -52,7 +52,9 @@ class _LoginState extends State<Login> {
 
         Align(
           alignment: Alignment.centerRight,
-          child: IconButton(icon: Icon(Icons.visibility), onPressed: () {}),
+          child: IconButton(icon: Icon(Icons.visibility), onPressed: () {
+            
+          }),
         ),
       ],
     );
@@ -86,8 +88,8 @@ class _LoginState extends State<Login> {
         onPressed:
             _isButtonEnabled
                 ? () {
-                  authData.username = _userController.text
-                  authData.password = _passwordController.text
+                  authData.username = _userController.text;
+                  authData.password = _passwordController.text;
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => Home(
