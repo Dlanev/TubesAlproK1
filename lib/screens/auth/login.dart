@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubes_alpro/data.dart';
 import 'package:tubes_alpro/screens/home/home.dart';
 import 'package:tubes_alpro/widgets/widgets.dart';
 
@@ -8,13 +9,33 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  Widget _authTitle() {
-    return wAuthTitle('Login', 'Enter your email and password');
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _userController.addListener(_validateInputs);
+    _passwordController.addListener(_validateInputs);
   }
 
-  Widget _inputEmail() {
-    return Container(
-      child: TextField(decoration: InputDecoration(hintText: 'Email')),
+  void _validateInputs() {
+    setState(() {
+      _isButtonEnabled =
+          _userController.text.isNotEmpty &&
+          _passwordController.text.isNotEmpty;
+    });
+  }
+
+  Widget _authTitle() {
+    return wAuthTitle('Login', 'Enter your username and password');
+  }
+
+  Widget _inputUser() {
+    return TextField(
+      controller: _userController,
+      decoration: InputDecoration(hintText: 'Username'),
     );
   }
 
@@ -22,7 +43,11 @@ class _LoginState extends State<Login> {
     return Stack(
       children: <Widget>[
         Container(
-          child: TextField(decoration: InputDecoration(hintText: 'Password')),
+          child: TextField(
+            controller: _passwordController,
+            decoration: InputDecoration(hintText: 'Password'),
+            obscureText: true,
+          ),
         ),
 
         Align(
@@ -58,12 +83,18 @@ class _LoginState extends State<Login> {
           foregroundColor: Colors.white,
         ),
         child: Text('Login'),
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Home()),
-          );
-        },
+        onPressed:
+            _isButtonEnabled
+                ? () {
+                  authData.username = _userController.text
+                  authData.password = _passwordController.text
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home(
+                    )),
+                  );
+                }
+                : null,
       ),
     );
   }
@@ -122,7 +153,7 @@ class _LoginState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _authTitle(),
-              _inputEmail(),
+              _inputUser(),
               _inputPw(),
               _forgotPw(),
               _subMit(),
