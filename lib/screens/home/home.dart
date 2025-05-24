@@ -1,8 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:tubes_alpro/data.dart';
 import 'package:tubes_alpro/screens/options.dart';
+import 'package:tubes_alpro/screens/profile.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,13 +9,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   Future<void> _inputBudget(String title, Function(int) onSaved) async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => BudgetPage(title: title),
-      ),
+      MaterialPageRoute(builder: (context) => BudgetPage(title: title)),
     );
     if (result != null) {
       onSaved(result);
@@ -29,7 +25,7 @@ class _HomeState extends State<Home> {
     required String filledLabel,
     required VoidCallback onPressed,
   }) {
-    final isFilled = value != null;
+    final isFilled = value != 0;
 
     return Container(
       height: 140,
@@ -39,43 +35,41 @@ class _HomeState extends State<Home> {
         borderRadius: BorderRadius.circular(12),
       ),
       padding: EdgeInsets.all(16),
-      child: isFilled
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  filledLabel,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white70,
+      child:
+          isFilled
+              ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    filledLabel,
+                    style: TextStyle(fontSize: 16, color: Colors.white70),
                   ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Rp $value',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  SizedBox(height: 8),
+                  Text(
+                    'Rp $value',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ],
-            )
-          : Center(
-              child: ElevatedButton(
-                onPressed: onPressed,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                ],
+              )
+              : Center(
+                child: ElevatedButton(
+                  onPressed: onPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 14),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 14),
+                  child: Text(emptyLabel),
                 ),
-                child: Text(emptyLabel),
               ),
-            ),
     );
   }
 
@@ -101,25 +95,27 @@ class _HomeState extends State<Home> {
           children: [
             buildBudgetBox(
               value: budGet.Balance,
-              emptyLabel: "Masukkan Budget Modal",
-              filledLabel: "Budget Modal Anda Sekarang",
-              onPressed: () => _inputBudget("Masukkan Budget Modal", (val) {
-                setState(() {
-                  budGet.Balance = val;
-                });
-              }),
+              emptyLabel: "Masukkan Balance",
+              filledLabel: "Balance Anda Sekarang",
+              onPressed:
+                  () => _inputBudget("Masukkan Balance", (val) {
+                    setState(() {
+                      budGet.Balance = val;
+                    });
+                  }),
             ),
             SizedBox(height: 20),
             buildBudgetBox(
               value: budGet.Budget,
               emptyLabel: "Masukkan Budget Perjalanan",
               filledLabel: "Budget Perjalanan Anda Sekarang",
-              onPressed: () => _inputBudget("Masukkan Budget Perjalanan", (val) {
-                setState(() {
-                  budGet.Budget = val;
-                  budGet.Balance = budGet.Balance - budGet.Budget;
-                });
-              }),
+              onPressed:
+                  () => _inputBudget("Masukkan Budget Perjalanan", (val) {
+                    setState(() {
+                      budGet.Budget = val;
+                      budGet.Balance = budGet.Balance - budGet.Budget;
+                    });
+                  }),
             ),
           ],
         ),
@@ -147,7 +143,12 @@ class _HomeState extends State<Home> {
               SizedBox(width: 40),
               IconButton(
                 icon: Icon(Icons.person, color: Colors.white),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => proFile()),
+                  );
+                },
               ),
             ],
           ),
@@ -196,7 +197,7 @@ class BudgetPage extends StatelessWidget {
                 }
               },
               child: Text('Simpan'),
-            )
+            ),
           ],
         ),
       ),
