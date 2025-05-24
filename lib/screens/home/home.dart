@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tubes_alpro/data.dart';
 import 'package:tubes_alpro/screens/options.dart';
+import 'package:tubes_alpro/screens/profile.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,9 +14,7 @@ class _HomeState extends State<Home> {
   Future<void> _inputBudget(String title, Function(int) onSaved) async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => BudgetPage(title: title),
-      ),
+      MaterialPageRoute(builder: (context) => BudgetPage(title: title)),
     );
     if (result != null) {
       onSaved(result);
@@ -38,50 +37,48 @@ class _HomeState extends State<Home> {
         borderRadius: BorderRadius.circular(12),
       ),
       padding: EdgeInsets.all(16),
-      child: isFilled
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  filledLabel,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white70,
+      child:
+          isFilled
+              ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    filledLabel,
+                    style: TextStyle(fontSize: 16, color: Colors.white70),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Rp $value',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              )
+              : Center(
+                child: ElevatedButton(
+                  onPressed: onPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ), // padding tulisan
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    emptyLabel,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 8),
-                Text(
-                  'Rp $value',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            )
-          : Center(
-          child: ElevatedButton(
-            onPressed: onPressed,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
-              foregroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12), // padding tulisan
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
               ),
-            ),
-            child: Text(
-              emptyLabel,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
     );
   }
 
@@ -102,6 +99,7 @@ class _HomeState extends State<Home> {
         centerTitle: false,
       ),
 
+<<<<<<< HEAD
       
 
   body: Padding(
@@ -229,6 +227,73 @@ class _HomeState extends State<Home> {
   ),
 ),
 
+=======
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            buildBudgetBox(
+              value: budGet.Balance,
+              emptyLabel: "Masukkan Balance",
+              filledLabel: "Balance Anda Sekarang",
+              onPressed:
+                  () => _inputBudget("Masukkan Balance", (val) {
+                    setState(() {
+                      budGet.Balance = val;
+                    });
+                  }),
+            ),
+            SizedBox(height: 20),
+            buildBudgetBox(
+              value: budGet.Budget,
+              emptyLabel: "Masukkan Budget Perjalanan",
+              filledLabel: "Budget Perjalanan Anda Sekarang",
+              onPressed:
+                  () => _inputBudget("Masukkan Budget Perjalanan", (val) {
+                    setState(() {
+                      if (budGet.Balance != 0) {
+                        budGet.Budget = val;
+                        budGet.Balance = budGet.Balance - budGet.Budget;
+                        isTripActive = true; // Perjalanan aktif
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Balance anda kurang')),
+                        );
+                      }
+                    });
+                  }),
+            ),
+            if (isTripActive) // Tambahan tombol end trip
+              Column(
+                children: [
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        budGet.Balance += budGet.Budget;
+                        budGet.Budget = 0;
+                        isTripActive = false;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 245, 253, 9),
+                      foregroundColor: const Color.fromARGB(255, 52, 52, 52),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 14,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: Text('Akhiri Perjalanan Anda'),
+                  ),
+                ],
+              ),
+          ],
+        ),
+      ),
+>>>>>>> d5b5c65b840ca34536036eb7a65a5d131e78ba07
 
 
 
@@ -255,7 +320,12 @@ class _HomeState extends State<Home> {
               SizedBox(width: 40),
               IconButton(
                 icon: Icon(Icons.person, color: Colors.white),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => proFile()),
+                  );
+                },
               ),
             ],
           ),
@@ -282,30 +352,34 @@ class BudgetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _controller,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Masukkan nominal'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final budget = int.tryParse(_controller.text);
-                if (budget != null) {
-                  Navigator.pop(context, budget);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Masukkan angka yang valid')),
-                  );
-                }
-              },
-              child: Text('Simpan'),
-            )
-          ],
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Spacer(flex: 1),
+              TextField(
+                controller: _controller,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: 'Masukkan nominal'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  final budget = int.tryParse(_controller.text);
+                  if (budget != null) {
+                    Navigator.pop(context, budget);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Masukkan angka yang valid')),
+                    );
+                  }
+                },
+                child: Text('Simpan'),
+              ),
+              Spacer(flex: 2,),
+            ],
+          ),
         ),
       ),
     );
