@@ -9,6 +9,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isTripActive = false;
+
   Future<void> _inputBudget(String title, Function(int) onSaved) async {
     final result = await Navigator.push(
       context,
@@ -35,41 +37,50 @@ class _HomeState extends State<Home> {
         borderRadius: BorderRadius.circular(12),
       ),
       padding: EdgeInsets.all(16),
-      child:
-          isFilled
-              ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    filledLabel,
-                    style: TextStyle(fontSize: 16, color: Colors.white70),
+      child: isFilled
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  filledLabel,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white70,
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Rp $value',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              )
-              : Center(
-                child: ElevatedButton(
-                  onPressed: onPressed,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 14),
-                  ),
-                  child: Text(emptyLabel),
                 ),
+                SizedBox(height: 8),
+                Text(
+                  'Rp $value',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            )
+          : Center(
+          child: ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepPurple,
+              foregroundColor: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12), // padding tulisan
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
+            ),
+            child: Text(
+              emptyLabel,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
     );
   }
 
@@ -89,37 +100,63 @@ class _HomeState extends State<Home> {
         ),
         centerTitle: false,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
+
+  body: Padding(
+  padding: const EdgeInsets.all(20),
+  child: Column(
+    children: [
+      buildBudgetBox(
+        value: budGet.Balance,
+        emptyLabel: "Masukkan Budget Modal",
+        filledLabel: "Budget Modal Anda Sekarang",
+        onPressed: () => _inputBudget("Masukkan Budget Modal", (val) {
+          setState(() {
+            budGet.Balance = val;
+          });
+        }),
+      ),
+      SizedBox(height: 20),
+      buildBudgetBox(
+        value: budGet.Budget,
+        emptyLabel: "Masukkan Budget Perjalanan",
+        filledLabel: "Budget Perjalanan Anda Sekarang",
+        onPressed: () => _inputBudget("Masukkan Budget Perjalanan", (val) {
+          setState(() {
+            budGet.Budget = val;
+            budGet.Balance = budGet.Balance - budGet.Budget;
+            isTripActive = true; // Perjalanan aktif
+          });
+        }),
+      ),
+      if (isTripActive) // Tambahan tombol end trip
+        Column(
           children: [
-            buildBudgetBox(
-              value: budGet.Balance,
-              emptyLabel: "Masukkan Balance",
-              filledLabel: "Balance Anda Sekarang",
-              onPressed:
-                  () => _inputBudget("Masukkan Balance", (val) {
-                    setState(() {
-                      budGet.Balance = val;
-                    });
-                  }),
-            ),
             SizedBox(height: 20),
-            buildBudgetBox(
-              value: budGet.Budget,
-              emptyLabel: "Masukkan Budget Perjalanan",
-              filledLabel: "Budget Perjalanan Anda Sekarang",
-              onPressed:
-                  () => _inputBudget("Masukkan Budget Perjalanan", (val) {
-                    setState(() {
-                      budGet.Budget = val;
-                      budGet.Balance = budGet.Balance - budGet.Budget;
-                    });
-                  }),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  budGet.Balance += budGet.Budget;
+                  budGet.Budget = 0;
+                  isTripActive = false;
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 245, 253, 9),
+                foregroundColor: const Color.fromARGB(255, 52, 52, 52),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: Text('Akhiri Perjalanan Anda'),
             ),
           ],
         ),
-      ),
+    ],
+  ),
+),
+
+
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 8,
