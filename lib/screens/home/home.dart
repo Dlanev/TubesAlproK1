@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubes_alpro/data.dart';
 import 'package:tubes_alpro/screens/options.dart';
 import 'package:tubes_alpro/screens/profile.dart';
+import 'package:tubes_alpro/screens/spend.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -125,7 +126,7 @@ class _HomeState extends State<Home> {
                       if (budGet.Balance != 0) {
                         budGet.Budget = val;
                         budGet.Balance = budGet.Balance - budGet.Budget;
-                        isTripActive = true; 
+                        isTripActive = true;
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Balance anda kurang')),
@@ -303,7 +304,12 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => spenData()),
+          );
+        },
         backgroundColor: Colors.white,
         elevation: 4,
         child: Icon(Icons.qr_code_scanner),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tubes_alpro/data.dart';
+import 'package:tubes_alpro/screens/home/home.dart';
 import 'package:tubes_alpro/widgets/widgets.dart';
 
 class spenData extends StatelessWidget {
@@ -30,10 +31,31 @@ class spenData extends StatelessWidget {
                 decoration: InputDecoration(hintText: 'Tipe Transaksi'),
               ),
             ),
+            wTextDivider(''),
             ElevatedButton(
               onPressed: () {
-                spEnding[nData].amount = int.tryParse(_controller1.text);
-                spEnding[nData].tipe = _controller2.text;
+                final amount = int.tryParse(_controller1.text);
+                final tipe = _controller2.text;
+
+                if (amount == null || tipe.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Masukkan data yang valid')),
+                  );
+                } else if (amount > budGet.Budget) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Jumlah melebihi budget perjalanan'),
+                    ),
+                  );
+                } else {
+                  spEnding.add(spend(amount: amount, tipe: tipe));
+                  nData++;
+                  budGet.Budget -= amount; 
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                  );
+                }
               },
               child: Text('Confirm'),
             ),
