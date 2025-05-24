@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:tubes_alpro/data.dart';
 import 'package:tubes_alpro/screens/options.dart';
@@ -10,6 +8,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isTripActive = false;
 
   Future<void> _inputBudget(String title, Function(int) onSaved) async {
     final result = await Navigator.push(
@@ -29,7 +28,7 @@ class _HomeState extends State<Home> {
     required String filledLabel,
     required VoidCallback onPressed,
   }) {
-    final isFilled = value != null;
+    final isFilled = value != 0;
 
     return Container(
       height: 140,
@@ -63,19 +62,26 @@ class _HomeState extends State<Home> {
               ],
             )
           : Center(
-              child: ElevatedButton(
-                onPressed: onPressed,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 14),
-                ),
-                child: Text(emptyLabel),
+          child: ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepPurple,
+              foregroundColor: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12), // padding tulisan
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
             ),
+            child: Text(
+              emptyLabel,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
     );
   }
 
@@ -95,35 +101,63 @@ class _HomeState extends State<Home> {
         ),
         centerTitle: false,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
+
+  body: Padding(
+  padding: const EdgeInsets.all(20),
+  child: Column(
+    children: [
+      buildBudgetBox(
+        value: budGet.Balance,
+        emptyLabel: "Masukkan Budget Modal",
+        filledLabel: "Budget Modal Anda Sekarang",
+        onPressed: () => _inputBudget("Masukkan Budget Modal", (val) {
+          setState(() {
+            budGet.Balance = val;
+          });
+        }),
+      ),
+      SizedBox(height: 20),
+      buildBudgetBox(
+        value: budGet.Budget,
+        emptyLabel: "Masukkan Budget Perjalanan",
+        filledLabel: "Budget Perjalanan Anda Sekarang",
+        onPressed: () => _inputBudget("Masukkan Budget Perjalanan", (val) {
+          setState(() {
+            budGet.Budget = val;
+            budGet.Balance = budGet.Balance - budGet.Budget;
+            isTripActive = true; // Perjalanan aktif
+          });
+        }),
+      ),
+      if (isTripActive) // Tambahan tombol end trip
+        Column(
           children: [
-            buildBudgetBox(
-              value: budGet.Balance,
-              emptyLabel: "Masukkan Budget Modal",
-              filledLabel: "Budget Modal Anda Sekarang",
-              onPressed: () => _inputBudget("Masukkan Budget Modal", (val) {
-                setState(() {
-                  budGet.Balance = val;
-                });
-              }),
-            ),
             SizedBox(height: 20),
-            buildBudgetBox(
-              value: budGet.Budget,
-              emptyLabel: "Masukkan Budget Perjalanan",
-              filledLabel: "Budget Perjalanan Anda Sekarang",
-              onPressed: () => _inputBudget("Masukkan Budget Perjalanan", (val) {
+            ElevatedButton(
+              onPressed: () {
                 setState(() {
-                  budGet.Budget = val;
-                  budGet.Balance = budGet.Balance - budGet.Budget;
+                  budGet.Balance += budGet.Budget;
+                  budGet.Budget = 0;
+                  isTripActive = false;
                 });
-              }),
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 245, 253, 9),
+                foregroundColor: const Color.fromARGB(255, 52, 52, 52),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: Text('Akhiri Perjalanan Anda'),
             ),
           ],
         ),
-      ),
+    ],
+  ),
+),
+
+
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 8,
