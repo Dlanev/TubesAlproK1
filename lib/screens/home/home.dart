@@ -126,7 +126,6 @@ class _HomeState extends State<Home> {
                       if (budGet.Balance != 0) {
                         budGet.Budget = val;
                         budGet.Balance = budGet.Balance - budGet.Budget;
-                        isTripActive = true;
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Balance anda kurang')),
@@ -137,7 +136,7 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(height: 20),
 
-            if (isTripActive) ...[
+            if (budGet.Budget != 0) ...[
               ElevatedButton(
                 onPressed: () {
                   setState(() {
@@ -158,12 +157,12 @@ class _HomeState extends State<Home> {
             Expanded(
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(bottom: 20), // Jarak dari tombol QR
+                margin: EdgeInsets.only(bottom: 20), 
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                padding: EdgeInsets.all(8), // Padding
+                padding: EdgeInsets.all(8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
