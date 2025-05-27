@@ -53,7 +53,9 @@ class spenData extends StatelessWidget {
                     ),
                   );
                 } else {
-                  spEnding.add(spend(amount: amount, tipe: tipe));
+                  spEnding[nData]?.amount = amount;
+                  spEnding[nData]?.tipe = tipe; 
+                  spEnding[nData]?.waktu = DateTime.now();
                   nData++;
                   budGet.Budget -= amount;
                   Navigator.push(
