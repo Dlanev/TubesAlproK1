@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         title: Text(
-          'Nama Aplikasi',
+          'Nama Aplikasi', // nama aplikasi
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -99,8 +99,7 @@ class _HomeState extends State<Home> {
         centerTitle: false,
       ),
 
-<<<<<<< HEAD
-      
+
 
   body: Padding(
   padding: const EdgeInsets.all(20),
@@ -226,75 +225,6 @@ class _HomeState extends State<Home> {
     ],
   ),
 ),
-
-=======
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            buildBudgetBox(
-              value: budGet.Balance,
-              emptyLabel: "Masukkan Balance",
-              filledLabel: "Balance Anda Sekarang",
-              onPressed:
-                  () => _inputBudget("Masukkan Balance", (val) {
-                    setState(() {
-                      budGet.Balance = val;
-                    });
-                  }),
-            ),
-            SizedBox(height: 20),
-            buildBudgetBox(
-              value: budGet.Budget,
-              emptyLabel: "Masukkan Budget Perjalanan",
-              filledLabel: "Budget Perjalanan Anda Sekarang",
-              onPressed:
-                  () => _inputBudget("Masukkan Budget Perjalanan", (val) {
-                    setState(() {
-                      if (budGet.Balance != 0) {
-                        budGet.Budget = val;
-                        budGet.Balance = budGet.Balance - budGet.Budget;
-                        isTripActive = true; // Perjalanan aktif
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Balance anda kurang')),
-                        );
-                      }
-                    });
-                  }),
-            ),
-            if (isTripActive) // Tambahan tombol end trip
-              Column(
-                children: [
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        budGet.Balance += budGet.Budget;
-                        budGet.Budget = 0;
-                        isTripActive = false;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 245, 253, 9),
-                      foregroundColor: const Color.fromARGB(255, 52, 52, 52),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 14,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: Text('Akhiri Perjalanan Anda'),
-                  ),
-                ],
-              ),
-          ],
-        ),
-      ),
->>>>>>> d5b5c65b840ca34536036eb7a65a5d131e78ba07
-
 
 
       bottomNavigationBar: BottomAppBar(
