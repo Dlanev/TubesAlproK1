@@ -8,12 +8,12 @@ class spenData extends StatefulWidget {
   _spenDataState createState() => _spenDataState();
 }
 
-class _spenDataState extends State<spenData>{
+class _spenDataState extends State<spenData> {
   final TextEditingController _controller1 = TextEditingController();
   String? _selectedType;
 
   final List<String> _transactionTypes = [
-    'Transport',
+    'Transportasi',
     'Makanan',
     'Akomodasi',
     'Hiburan',
@@ -41,12 +41,10 @@ class _spenDataState extends State<spenData>{
             DropdownButtonFormField<String>(
               value: _selectedType,
               hint: Text('Pilih Tipe Transaksi'),
-              items: _transactionTypes.map((type) {
-                return DropdownMenuItem(
-                  value: type,
-                  child: Text(type),
-                );
-              }).toList(),
+              items:
+                  _transactionTypes.map((type) {
+                    return DropdownMenuItem(value: type, child: Text(type));
+                  }).toList(),
               onChanged: (value) {
                 setState(() {
                   _selectedType = value;
@@ -74,10 +72,15 @@ class _spenDataState extends State<spenData>{
                     ),
                   );
                 } else {
-                  spEnding[nData]?.amount = amount;
-                  spEnding[nData]?.tipe = _selectedType!; 
-                  spEnding[nData]?.waktu = DateTime.now();
+                  spEnding[nData] = spend(
+                    amount: amount,
+                    tipe: _selectedType!,
+                    waktu: DateTime.now(),
+                  );
                   nData++;
+                  if (nData > 20){
+                    nData = 20;
+                  }
                   budGet.Budget -= amount;
                   Navigator.push(
                     context,

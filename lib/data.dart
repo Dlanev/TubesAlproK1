@@ -13,7 +13,7 @@ class spend {
   int? amount ;
   String? tipe;
   DateTime? waktu;
-
+  spend({this.amount, this.tipe, this.waktu});
 }
 
 List<spend?> spEnding = List.filled(20, null);

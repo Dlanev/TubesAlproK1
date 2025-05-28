@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tubes_alpro/data.dart';
-import 'package:tubes_alpro/screens/options.dart';
+import 'package:tubes_alpro/screens/historylist.dart';
 import 'package:tubes_alpro/screens/profile.dart';
 import 'package:tubes_alpro/screens/spend.dart';
 
@@ -123,12 +123,22 @@ class _HomeState extends State<Home> {
               onPressed:
                   () => _inputBudget("Masukkan Budget Perjalanan", (val) {
                     setState(() {
-                      if (budGet.Balance != 0) {
+                      if (val > budGet.Balance) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Nominal Melebihi Balance'),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                      } else if (budGet.Balance != 0) {
                         budGet.Budget = val;
                         budGet.Balance = budGet.Balance - budGet.Budget;
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Balance anda kurang')),
+                          SnackBar(
+                            content: Text('Balance anda kurang'),
+                            behavior: SnackBarBehavior.floating,
+                          ),
                         );
                       }
                     });
@@ -157,7 +167,7 @@ class _HomeState extends State<Home> {
             Expanded(
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(bottom: 20), 
+                margin: EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.circular(12),
@@ -173,7 +183,14 @@ class _HomeState extends State<Home> {
                           vertical: 9,
                         ),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => History(),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromARGB(
                               255,
@@ -192,7 +209,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           child: Text(
-                            "History",
+                            "Riwayat",
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -277,15 +294,13 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.more_horiz_rounded, color: Colors.white),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const OptionsScreen(),
-                    ),
-                  );
-                },
+                icon: Icon(Icons.add, color: Colors.white),
+                onPressed:
+                    () => _inputBudget("Masukkan Budget Perjalanan", (val) {
+                      setState(() {
+                        budGet.Balance += val;
+                      });
+                    }),
               ),
               SizedBox(width: 40),
               IconButton(

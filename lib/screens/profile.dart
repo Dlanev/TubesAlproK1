@@ -50,7 +50,7 @@ class _Profile extends State<proFile> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.deepPurple,
+              color: Colors.deepPurpleAccent,
             ),
           ),
           SizedBox(height: 20),
