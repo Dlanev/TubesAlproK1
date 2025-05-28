@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class authData {
   static String username = '';
@@ -11,11 +10,12 @@ class budGet {
 }
 
 class spend {
-  int? amount = 0;
-  String tipe = '';
-  TimeOfDay waktu = TimeOfDay(hour: 0, minute: 0);
+  int? amount ;
+  String? tipe;
+  DateTime? waktu;
+  spend({this.amount, this.tipe, this.waktu});
 }
 
-List<spend> spEnding = [];
+List<spend?> spEnding = List.filled(20, null);
 
 int nData = 0;
