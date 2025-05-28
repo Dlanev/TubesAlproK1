@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tubes_alpro/data.dart';
+import 'package:tubes_alpro/screens/chart/chart.dart';
 import 'package:tubes_alpro/screens/historylist.dart';
 import 'package:tubes_alpro/screens/profile.dart';
 import 'package:tubes_alpro/screens/spend.dart';
@@ -222,7 +223,9 @@ class _HomeState extends State<Home> {
                           vertical: 9,
                         ),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ChartScreen()));
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromARGB(
                               255,
