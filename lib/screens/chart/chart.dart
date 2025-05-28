@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tubes_alpro/data.dart'; // Pastikan file data.dart sudah ada di folder lib/
+import 'package:tubes_alpro/data.dart';
 
 class ChartScreen extends StatelessWidget {
   const ChartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Hitung total pengeluaran per kategori
+    // INi buat hitung total pengeluaran per kategori
     Map<String, int> categoryTotals = {
       'Akomodasi': 0,
       'Makanan': 0,
@@ -23,7 +23,7 @@ class ChartScreen extends StatelessWidget {
       }
     }
 
-    // Buat data untuk chart
+    // Data untuk chart
     List<Map<String, dynamic>> data = categoryTotals.entries.map((entry) {
       return {
         'domain': entry.key,
@@ -116,7 +116,7 @@ class BarChartPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     double barWidth = size.width / (data.length * 2);
-    double maxHeight = size.height - 40; // Kasih padding bawah dan atas
+    double maxHeight = size.height - 40; // Padding bawah dan atas
 
     Paint axisPaint = Paint()
       ..color = Colors.black
@@ -129,12 +129,12 @@ class BarChartPainter extends CustomPainter {
       'Hiburan': const Color.fromARGB(255, 190, 160, 231),
     };
 
-    // Cari data terbesar (measure)
+    // Cari data terbesar
     double maxMeasure = data.isNotEmpty
         ? data.map((e) => e['measure'].toDouble()).reduce((a, b) => a > b ? a : b)
         : 1;
 
-    // Tambahkan margin atas dan bawah
+    // Margin atas dan bawah
     double topMargin = 20;
 
     // Gambar sumbu X
@@ -148,7 +148,7 @@ class BarChartPainter extends CustomPainter {
       String domain = data[i]['domain'];
       double measure = data[i]['measure'].toDouble();
 
-      // Skala dinamis berdasarkan maxMeasure
+      // Skala dinamis maxMeasure
       double barHeight = (measure / maxMeasure) * (maxHeight - topMargin);
       double x = i * barWidth * 2 + barWidth / 2;
       double y = (maxHeight + topMargin) - barHeight;
