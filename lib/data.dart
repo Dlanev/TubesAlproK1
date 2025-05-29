@@ -109,7 +109,7 @@ int binarySearchKategori(String targetTipe) {
 }
 
 
-List<int> binarySearchSemuaKategori(String targetTipe) {
+List<int> binarySearchKategoriSemua(String targetTipe) {
   List<int> hasil = [];
   int index = binarySearchKategori(targetTipe);
   
