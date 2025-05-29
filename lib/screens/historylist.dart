@@ -55,11 +55,16 @@ class _histState extends State<History> {
           PopupMenuButton<String>(
             icon: Icon(Icons.search, color: Colors.white),
             onSelected: (String value) {
-              
+              setState(() {
+                sequentialSearchSemuaKategori(value);
+              });
             },
             itemBuilder:
                 (BuildContext context) => [
-                  PopupMenuItem(value: 'Transportasi', child: Text('Transportasi')),
+                  PopupMenuItem(
+                    value: 'Transportasi',
+                    child: Text('Transportasi'),
+                  ),
                   PopupMenuItem(value: 'Makanan', child: Text('Makanan')),
                   PopupMenuItem(value: 'Akomodasi', child: Text('Akomodasi')),
                   PopupMenuItem(value: 'Hiburan', child: Text('Hiburan')),
@@ -68,9 +73,9 @@ class _histState extends State<History> {
           PopupMenuButton<String>(
             icon: Icon(Icons.filter_list, color: Colors.white),
             onSelected: (String value) {
-              if (value == 'Oldest'){
+              if (value == 'Oldest') {
                 setState(() {
-                insertionSortWaktuLamaBaru();
+                  insertionSortWaktuLamaBaru();
                 });
               } else if (value == 'Newest') {
                 setState(() {
@@ -80,7 +85,7 @@ class _histState extends State<History> {
                 setState(() {
                   insertionSortSpendingBesarKecil();
                 });
-              } else if (value == 'Least'){
+              } else if (value == 'Least') {
                 setState(() {
                   insertionSortSpendingKecilBesar();
                 });
