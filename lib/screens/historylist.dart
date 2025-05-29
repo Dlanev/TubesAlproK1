@@ -43,7 +43,7 @@ class _histState extends State<History> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "History",
+          "Riwayat",
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -51,6 +51,34 @@ class _histState extends State<History> {
           ),
         ),
         backgroundColor: Colors.deepPurpleAccent,
+        actions: [
+          PopupMenuButton<String>(
+            icon: Icon(Icons.search, color: Colors.white),
+            onSelected: (String value) {
+              
+            },
+            itemBuilder:
+                (BuildContext context) => [
+                  PopupMenuItem(value: 'Transportasi', child: Text('Transportasi')),
+                  PopupMenuItem(value: 'Makanan', child: Text('Makanan')),
+                  PopupMenuItem(value: 'Akomodasi', child: Text('Akomodasi')),
+                  PopupMenuItem(value: 'Hiburan', child: Text('Hiburan')),
+                ],
+          ),
+          PopupMenuButton<String>(
+            icon: Icon(Icons.filter_list, color: Colors.white),
+            onSelected: (String value) {
+              
+            },
+            itemBuilder:
+                (BuildContext context) => [
+                  PopupMenuItem(value: 'Oldest', child: Text('Terlama')),
+                  PopupMenuItem(value: 'Newest', child: Text('Terbaru')),
+                  PopupMenuItem(value: 'Most', child: Text('Terbanyak')),
+                  PopupMenuItem(value: 'Least', child: Text('Tersedikit')),
+                ],
+          ),
+        ],
       ),
       body: buildSpendingHistory(),
     );
