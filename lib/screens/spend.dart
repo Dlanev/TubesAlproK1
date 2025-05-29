@@ -63,12 +63,16 @@ class _spenDataState extends State<spenData> {
 
                 if (amount == null || _selectedType == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Masukkan data yang valid')),
+                    SnackBar(
+                      content: Text('Masukkan data yang valid'),
+                      behavior: SnackBarBehavior.floating,
+                    ),
                   );
                 } else if (amount > budGet.Budget) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Jumlah melebihi budget perjalanan'),
+                      behavior: SnackBarBehavior.floating,
                     ),
                   );
                 } else {
@@ -78,11 +82,11 @@ class _spenDataState extends State<spenData> {
                     waktu: DateTime.now(),
                   );
                   nData++;
-                  if (nData > 20){
+                  if (nData > 20) {
                     nData = 20;
                   }
                   budGet.Budget -= amount;
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => Home()),
                   );

@@ -68,7 +68,23 @@ class _histState extends State<History> {
           PopupMenuButton<String>(
             icon: Icon(Icons.filter_list, color: Colors.white),
             onSelected: (String value) {
-              
+              if (value == 'Oldest'){
+                setState(() {
+                insertionSortWaktuLamaBaru();
+                });
+              } else if (value == 'Newest') {
+                setState(() {
+                  insertionSortBaruLama();
+                });
+              } else if (value == 'Most') {
+                setState(() {
+                  insertionSortSpendingBesarKecil();
+                });
+              } else if (value == 'Least'){
+                setState(() {
+                  insertionSortSpendingKecilBesar();
+                });
+              }
             },
             itemBuilder:
                 (BuildContext context) => [

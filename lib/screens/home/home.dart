@@ -89,9 +89,10 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Color(0xFFE6E6FA),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.deepPurple,
         title: Text(
-          'Nama Aplikasi', // nama aplikasi
+          'Nama Aplikasi', 
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
