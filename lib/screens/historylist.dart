@@ -7,8 +7,16 @@ class History extends StatefulWidget {
 }
 
 class _histState extends State<History> {
+  List<spend?> filteredSpending = [];
+  @override
+  void initState() {
+    super.initState();
+    filteredSpending = List.from(spEnding);
+  }
+
   Widget buildSpendingHistory() {
-    final nonNullSpending = spEnding.where((spend) => spend != null).toList();
+    final nonNullSpending =
+        filteredSpending.where((spend) => spend != null).toList();
 
     if (nonNullSpending.isEmpty) {
       return const Center(child: Text("Tidak Ada Riwayat Pengeluaran"));
@@ -56,7 +64,8 @@ class _histState extends State<History> {
             icon: Icon(Icons.search, color: Colors.white),
             onSelected: (String value) {
               setState(() {
-                sequentialSearchSemuaKategori(value);
+                List<int> indexs = sequentialSearchSemuaKategori(value);
+                filteredSpending = indexs.map((i) => spEnding[i]).toList();
               });
             },
             itemBuilder:
@@ -90,6 +99,7 @@ class _histState extends State<History> {
                   insertionSortSpendingKecilBesar();
                 });
               }
+               filteredSpending = List.from(spEnding); 
             },
             itemBuilder:
                 (BuildContext context) => [
