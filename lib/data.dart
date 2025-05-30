@@ -87,46 +87,22 @@ void insertionSortBaruLama() {
   }
 }
 
-int binarySearchKategori(String targetTipe) {
-  int left = 0;
-  int right = nData - 1;
-
-  while (left <= right) {
-    int mid = (left + right) ~/ 2;
-    var midSpend = spEnding[mid];
-    String midTipe = midSpend?.tipe ?? '';
-
-    int comparison = midTipe.compareTo(targetTipe);
-    if (comparison == 0) {
-      return mid;
-    } else if (comparison < 0) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
+int sequentialSearchKategori(List<int> data, int target) {
+  for (int i = 0; i < nData;  i++) {
+    if (spEnding[i] == target) {
+      return i;
     }
-  }
+  };
   return -1;
 }
 
-
-List<int> binarySearchKategoriSemua(String targetTipe) {
+List<int> sequentialSearchSemuaKategori(String targetTipe) {
   List<int> hasil = [];
-  int index = binarySearchKategori(targetTipe);
-  
-  if (index == -1) return hasil;
 
-  int left = index;
-  while (left >= 0 && (spEnding[left]?.tipe ?? '') == targetTipe) {
-    left--;
-  }
-
-  int right = index + 1;
-  while (right < nData && (spEnding[right]?.tipe ?? '') == targetTipe) {
-    right++;
-  }
-
-  for (int i = left + 1; i < right; i++) {
-    hasil.add(i);
+  for (int i = 0; i < nData; i++) {
+    if ((spEnding[i]?.tipe ?? '') == targetTipe) {
+      hasil.add(i);
+    }
   }
 
   return hasil;
