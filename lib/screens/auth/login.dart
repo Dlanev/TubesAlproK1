@@ -61,21 +61,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _forgotPw() {
-    return GestureDetector(
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-          color: Colors.transparent,
-          padding: EdgeInsets.fromLTRB(0, 20, 20, 20),
-          child: Text('Forgot Password?'),
-        ),
-      ),
-      onTap: () {
-        print('Forgot Password?');
-      },
-    );
-  }
+  
 
   Widget _subMit() {
     return Container(
@@ -102,45 +88,6 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _textDivider() {
-    return wTextDivider('OR CONNECT WITH');
-  }
-
-  Widget _gSignin() {
-    return Container(
-      width: double.infinity,
-      child: ElevatedButton.icon(
-        icon: Icon(Icons.mail),
-        onPressed: () {},
-        label: Text('Google'),
-      ),
-    );
-  }
-
-  Widget _regisTr() {
-    return Container(
-      margin: EdgeInsets.only(top: 40),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text('Belum Punya Akun? '),
-          GestureDetector(
-            child: Container(
-              padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-              color: Colors.transparent,
-              child: Text(
-                'Daftar',
-                style: TextStyle(color: Colors.deepPurpleAccent),
-              ),
-            ),
-            onTap: () {
-              print('Register');
-            },
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,11 +105,7 @@ class _LoginState extends State<Login> {
               _authTitle(),
               _inputUser(),
               _inputPw(),
-              _forgotPw(),
               _subMit(),
-              _textDivider(),
-              _gSignin(),
-              _regisTr(),
             ],
           ),
         ),
