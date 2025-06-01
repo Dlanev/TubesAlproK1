@@ -20,6 +20,12 @@ class _spenDataState extends State<spenData> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    generateDummyData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Spend')),
@@ -90,12 +96,17 @@ class _spenDataState extends State<spenData> {
                     MaterialPageRoute(builder: (context) => Home()),
                   );
                 } else {
-                  spEnding[nData] = spend(
+                  for (int i = nData; i > 0; i--) {
+                    spEnding[i] = spEnding[i - 1];
+                  }
+                  spEnding[0] = spend(
                     amount: amount,
                     tipe: _selectedType!,
                     waktu: DateTime.now(),
                   );
-                  nData++;
+                  if (nData < 20) {
+                    nData++;
+                  }
 
                   budGet.Budget -= amount;
                   Navigator.pushReplacement(

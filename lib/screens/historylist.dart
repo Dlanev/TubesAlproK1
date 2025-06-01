@@ -11,6 +11,7 @@ class _histState extends State<History> {
   @override
   void initState() {
     super.initState();
+    generateDummyData();
     filteredSpending = List.from(spEnding);
   }
 
