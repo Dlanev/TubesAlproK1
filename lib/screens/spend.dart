@@ -22,7 +22,9 @@ class _spenDataState extends State<spenData> {
   @override
   void initState() {
     super.initState();
-    generateDummyData();
+    if (nData == 0) {
+      generateDummyData();
+    }
   }
 
   @override
