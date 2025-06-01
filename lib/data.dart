@@ -107,3 +107,24 @@ List<int> sequentialSearchSemuaKategori(String targetTipe) {
 
   return hasil;
 }
+
+void generateDummyData() {
+  List<spend> dummyData = [
+    spend(amount: 5000, tipe: 'Makanan', waktu: DateTime.now().subtract(Duration(days: 1))),
+    spend(amount: 15000, tipe: 'Transportasi', waktu: DateTime.now().subtract(Duration(days: 2))),
+    spend(amount: 7000, tipe: 'Makanan', waktu: DateTime.now().subtract(Duration(hours: 5))),
+    spend(amount: 12000, tipe: 'Akomodasi', waktu: DateTime.now().subtract(Duration(days: 3))),
+    spend(amount: 3000, tipe: 'Hiburan', waktu: DateTime.now().subtract(Duration(hours: 1))),
+    spend(amount: 20000, tipe: 'Transportasi', waktu: DateTime.now().subtract(Duration(days: 4))),
+    spend(amount: 9000, tipe: 'Akomodasi', waktu: DateTime.now().subtract(Duration(days: 2, hours: 3))),
+    spend(amount: 8000, tipe: 'Makanan', waktu: DateTime.now().subtract(Duration(hours: 10))),
+    spend(amount: 10000, tipe: 'Hiburan', waktu: DateTime.now().subtract(Duration(days: 5))),
+    spend(amount: 6000, tipe: 'Transportasi', waktu: DateTime.now().subtract(Duration(minutes: 90))),
+  ];
+
+  for (int i = 0; i < dummyData.length; i++) {
+    spEnding[i] = dummyData[i];
+  }
+
+  nData = dummyData.length;
+}

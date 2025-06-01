@@ -60,7 +60,6 @@ class _spenDataState extends State<spenData> {
               ),
               onPressed: () {
                 final amount = int.tryParse(_controller1.text);
-
                 if (amount == null || _selectedType == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -75,6 +74,21 @@ class _spenDataState extends State<spenData> {
                       behavior: SnackBarBehavior.floating,
                     ),
                   );
+                } else if (nData == 20) {
+                  nData = 20;
+                  for (int i = 19; i > 0; i--) {
+                    spEnding[i] = spEnding[i - 1];
+                  }
+                  spEnding[0] = spend(
+                    amount: amount,
+                    tipe: _selectedType!,
+                    waktu: DateTime.now(),
+                  );
+                  budGet.Budget -= amount;
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Home()),
+                  );
                 } else {
                   spEnding[nData] = spend(
                     amount: amount,
@@ -82,9 +96,7 @@ class _spenDataState extends State<spenData> {
                     waktu: DateTime.now(),
                   );
                   nData++;
-                  if (nData > 20) {
-                    nData = 20;
-                  }
+
                   budGet.Budget -= amount;
                   Navigator.pushReplacement(
                     context,
